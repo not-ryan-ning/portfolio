@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================
+   DESIGN TOKENS - Notion/Vercel Grid
+   =================================== */
+
+:root {
+  /* Grid variables */
+  --grid-color: rgba(0, 0, 0, 0.08);
+  --grid-size: 1px;
+  
+  /* Spacing */
+  --container-max: 1100px;
+  --container-padding: clamp(0.5rem, 2vw, 1rem);
+  --section-gap: clamp(3rem, 8vw, 6rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===================================
+   BASE STYLES
+   =================================== */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: #fafafa;
+  color: #0f0f0f;
+  font-family: var(--font-geist-sans, system-ui, sans-serif);
+  position: relative;
+}
+
+/* Vines - togglable, scrolls with page */
+.vine-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(50% - var(--container-max) / 2 + 20px);
+  height: 100%;
+  min-height: 200vh;
+  background-image: url('/images/vines.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: right top;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  z-index: 5;
+  animation: vine-grow 0.6s ease-out forwards;
+  transform-origin: bottom;
+}
+
+.vine-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(50% - var(--container-max) / 2 + 20px);
+  height: 100%;
+  min-height: 200vh;
+  background-image: url('/images/vines.png');
+  background-repeat: repeat-y;
+  background-size: 100% auto;
+  background-position: left top;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  pointer-events: none;
+  z-index: 5;
+  animation: vine-grow 0.6s ease-out forwards;
+  transform-origin: bottom;
+}
+
+@keyframes vine-grow {
+  0% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+/* Smooth scroll */
+html {
+  scroll-padding-top: 100px;
+}
+
+/* ===================================
+   GRID CONTAINER SYSTEM
+   =================================== */
+
+.page-container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Grid section - creates bordered content areas */
+.grid-section {
+  position: relative;
+  background: #fafafa;
+  border-left: var(--grid-size) solid var(--grid-color);
+  border-right: var(--grid-size) solid var(--grid-color);
+  border-bottom: var(--grid-size) solid var(--grid-color);
+}
+
+.grid-section:first-child {
+  border-top: var(--grid-size) solid var(--grid-color);
+}
+
+
+/* Grid item - removed for cleaner look */
+
+/* ===================================
+   FOCUS STATES - Accessibility
+   =================================== */
+
+*:focus-visible {
+  outline: 2px solid #0f0f0f;
+  outline-offset: 4px;
+}
+
+/* ===================================
+   UTILITIES
+   =================================== */
+
+a {
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+.label-text {
+  font-family: var(--font-ibm-plex-mono, monospace);
+  font-size: 0.80rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  font-weight: 500;
+  font-weight: semi-bold;
+}
+
+/* Shiny underline effect - using same approach as ShinyText */
+.shiny-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.shiny-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 0, 0, 0.2) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(0, 0, 0, 0.2) 60%
+  );
+  background-size: 200% 100%;
+  animation: shine-underline 3s linear infinite;
+}
+
+@keyframes shine-underline {
+  0% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: -100%;
+  }
+}
+
+.shiny-underline-delay-0::after {
+  animation-delay: 0s;
+}
+
+.shiny-underline-delay-2::after {
+  animation-delay: 3s;
+}
+
+.shiny-underline-delay-4::after {
+  animation-delay: 6s;
+}
+
+/* Navigation glass - opaque enough to hide borders below */
+.nav-glass {
+  background: rgba(250, 250, 250, 0.95);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+}
+
+/* Sticky note effect */
+.sticky-note {
+  position: relative;
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  max-width: fit-content;
+  user-select: none;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 32px) 0,
+    100% 32px,
+    100% 100%,
+    0 100%
+  );
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15)) 
+          drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
+}
+
+.sticky-note a {
+  pointer-events: auto;
+  user-select: text;
+}
+
+/* Folded corner */
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 32px 32px 0;
+  border-color: transparent #fafafa transparent transparent;
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+
