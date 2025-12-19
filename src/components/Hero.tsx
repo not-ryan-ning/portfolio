@@ -20,9 +20,12 @@ const DiagonalArrow = () => (
   </svg>
 );
 
+import LeafLens from "./LeafLens";
+
 export default function Hero() {
   return (
-    <section className="grid-section">
+    <section className="grid-section relative">
+      <LeafLens />
       <div className="p-6 md:p-12">
         <div className="w-full">
           <p className="hero-name text-xl md:text-2xl mb-4 tracking-tight font-semibold">

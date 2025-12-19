@@ -30,11 +30,11 @@ export default function VineToggle() {
         </svg>
       </button>
 
-      {/* Vines - scroll with page */}
+      {/* Vines - scroll with page, grow animation */}
       {showVines && (
         <>
-          <div className="vine-left" />
-          <div className="vine-right" />
+          <div className="vine-left vine-animate" />
+          <div className="vine-right vine-animate" />
         </>
       )}
     </>
